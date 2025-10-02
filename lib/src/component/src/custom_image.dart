@@ -45,5 +45,5 @@ class CustomCachedNetworkImageBuilder extends StatelessWidget {
 }
 class SearchImageWidget extends CustomCachedNetworkImageBuilder {
   SearchImageWidget({super.key, required super.imageUrl, super.onTap, super.onTapErrorWidget})
-      : super(width: null, height: null, errorWidget: CachedNetworkImage(imageUrl: 'https://res.cloudinary.com/jnappdev/image/upload/v1718057643/musicium/bykfrfphyn81q68yptyw.jpg'));
+      : super(width: null, height: null, errorWidget: Image.network('https://res.cloudinary.com/jnappdev/image/upload/v1718057643/musicium/bykfrfphyn81q68yptyw.jpg'));
 }

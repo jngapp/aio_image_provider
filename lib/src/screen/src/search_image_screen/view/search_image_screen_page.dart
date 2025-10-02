@@ -1,4 +1,3 @@
-import 'package:aio_image_provider/src/component/src/expanded_header.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';

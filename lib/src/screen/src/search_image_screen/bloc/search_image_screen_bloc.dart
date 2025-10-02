@@ -1,5 +1,4 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:cached_network_image/cached_network_image.dart';
 import 'package:equatable/equatable.dart';
 import 'package:get_it/get_it.dart';
 
@@ -45,9 +44,7 @@ class SearchImageScreenBloc
 
   @override
   Future<void> close() async {
-    for(final url in state.resultUrls) {
-      CachedNetworkImage.evictFromCache(url);
-    }
+    state.resultUrls.clear();
     return super.close();
   }
 }
