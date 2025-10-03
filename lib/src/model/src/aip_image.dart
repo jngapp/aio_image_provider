@@ -21,7 +21,7 @@ class AipUrlImage extends AipImage {
   AipUrlImage({required String url}) : super(url: url, path: null, assetName: null, type: AipImageType.url);
 
   @override
-  ImageProvider<Object> get imageProvider => CachedNetworkImageProvider(url!);
+  ImageProvider<Object> get imageProvider => NetworkImage(url!);
 
   // Future<bool> get isValidImage {
   //   return FlutterGoogleImage().isImageLink(url!);
