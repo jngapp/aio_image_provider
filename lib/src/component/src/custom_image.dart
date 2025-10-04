@@ -1,8 +1,7 @@
-import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 
 
-class CustomCachedNetworkImageBuilder extends StatelessWidget {
+class CustomNetworkImageBuilder extends StatelessWidget {
   final String? imageUrl;
   final double? height;
   final double? width;
@@ -10,7 +9,7 @@ class CustomCachedNetworkImageBuilder extends StatelessWidget {
   final Function()? onTap;
   final Function()? onTapErrorWidget;
 
-  const CustomCachedNetworkImageBuilder(
+  const CustomNetworkImageBuilder(
       {super.key, required this.imageUrl, this.width, this.height,
         this.errorWidget, this.onTap, this.onTapErrorWidget});
 
@@ -21,29 +20,33 @@ class CustomCachedNetworkImageBuilder extends StatelessWidget {
         width: width,
         child: AspectRatio(
           aspectRatio: 1,
-          child: CachedNetworkImage(
-            imageUrl: imageUrl!,
-            imageBuilder: (context, imageProvider) => GestureDetector(
-              onTap: onTap,
-              child: Container(
-                decoration: BoxDecoration(
-                  image: DecorationImage(
-                      image: imageProvider,
-                      fit: BoxFit.cover,
-                      alignment: Alignment.topCenter),
-                ),
-              ),
+          child: GestureDetector(
+            onTap: onTap,
+            child: Image.network(
+              imageUrl!,
+              errorBuilder: (context, object, errorObject) {
+                return GestureDetector(onTap: onTapErrorWidget, child: errorWidget ?? Image.network('https://res.cloudinary.com/jnappdev/image/upload/v1718057643/musicium/bykfrfphyn81q68yptyw.jpg', width: width, height: height,));
+              },
+              loadingBuilder: (context, child, loadingProgress) {
+                if (loadingProgress == null) {
+                  // Image is fully loaded or failed—show the image
+                  return child;
+                }
+                // Show progress indicator during loading
+                return Center(
+                  child: CircularProgressIndicator(
+                    value: loadingProgress.expectedTotalBytes != null
+                        ? loadingProgress.cumulativeBytesLoaded / loadingProgress.expectedTotalBytes!
+                        : null, // Indeterminate if total bytes unknown
+                  ),
+                );
+              },
             ),
-            errorWidget: (context, object, errorObject) {
-              return GestureDetector(onTap: onTapErrorWidget, child: errorWidget ?? CachedNetworkImage(imageUrl: 'https://res.cloudinary.com/jnappdev/image/upload/v1718057643/musicium/bykfrfphyn81q68yptyw.jpg', width: width, height: height,));
-            },
-            placeholder: (context, url) =>
-            const Center(child: CircularProgressIndicator()),
           ),
         ));
   }
 }
-class SearchImageWidget extends CustomCachedNetworkImageBuilder {
+class SearchImageWidget extends CustomNetworkImageBuilder {
   SearchImageWidget({super.key, required super.imageUrl, super.onTap, super.onTapErrorWidget})
       : super(width: null, height: null, errorWidget: Image.network('https://res.cloudinary.com/jnappdev/image/upload/v1718057643/musicium/bykfrfphyn81q68yptyw.jpg'));
 }
