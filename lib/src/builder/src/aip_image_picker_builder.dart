@@ -94,10 +94,10 @@ class AipImagePickerWidget extends AipImagePickerBuilder {
               CupertinoActionSheetAction(
                 onPressed: () async {
                   Navigator.pop(context);
-                  FilePickerResult? result = await FilePicker
+                  final result = await FilePicker
                       .pickFiles(type: FileType.image);
-                  if (result != null) {
-                    File file = File(result.files.single.path!);
+                  if (result.isNotEmpty) {
+                    File file = File(result.single.path!);
                     onSelectImage(file.path);
                   } else {
                     // User canceled the picker
