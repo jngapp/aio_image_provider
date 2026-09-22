@@ -135,13 +135,14 @@ class AioImageProvider {
         Function(Object error)? onError,
       }) async {
     _ensureInitialized();
-    final extension = getUint8ListImageExtension(imageData);
-    if (extension == null) {
+    final result = getUint8ListImageExtension(imageData);
+    if (result == null) {
       onError?.call(Exception('Extension not found'));
     } else {
-      final newFileName = '${Uuid().v4()}.$extension';
+      final newFileName = '${Uuid().v4()}.${result.extension}';
       try {
-        final newFile = await saveUint8ListToImage(imageData, "$saveDirectory/$newFileName");
+        final imageBytes = imageData.sublist(result.offset);
+        final newFile = await saveUint8ListToImage(imageBytes, "$saveDirectory/$newFileName");
         onSuccess?.call(newFileName);
       }
       catch (e) {
