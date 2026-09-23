@@ -16,7 +16,7 @@ dependencies:
   crypto: ^3.0.0
   flutter_bloc: ^9.1.1
   equatable: ^2.0.7
-  get_it: ^8.0.3
+  get_it: ^9.3.0
 
 dev_dependencies:
   flutter_lints: ^5.0.0
